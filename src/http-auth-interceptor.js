@@ -10,10 +10,25 @@
 (function () {
   'use strict';
 
+  var responseErrorFilter = function(rejection) {
+    return true;
+  };
+
   angular.module('http-auth-interceptor', ['http-auth-interceptor-buffer'])
 
   .factory('authService', ['$rootScope','httpBuffer', function($rootScope, httpBuffer) {
     return {
+
+      /**
+       * Call this function to set filter function which will be used to determine
+       * if response error should be intercepted. Function will receive rejected response
+       * as parameter and must return true (process error) or false (ignore error). By default all response errors
+       * will be intercepted.
+       */
+      setResponseErrorFilter: function(func) {
+        responseErrorFilter = func;
+      },
+
       /**
        * Call this function to indicate that authentication was successfull and trigger a
        * retry of all deferred requests.
@@ -53,6 +68,10 @@
     $httpProvider.interceptors.push(['$rootScope', '$q', 'httpBuffer', function($rootScope, $q, httpBuffer) {
       return {
         responseError: function(rejection) {
+          if (!responseErrorFilter(rejection)) {
+            return $q.reject(rejection);
+          }
+
           var config = rejection.config || {};
           if (!config.ignoreAuthModule) {
             switch (rejection.status) {
