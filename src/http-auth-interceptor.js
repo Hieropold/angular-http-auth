@@ -4,6 +4,8 @@
  * @license HTTP Auth Interceptor Module for AngularJS
  * (c) 2012 Witold Szczerba
  * License: MIT
+ *
+ * Filtering by target host to prevent headers leaking by Ilya Kurnosenkov.
  */
 (function () {
   'use strict';
