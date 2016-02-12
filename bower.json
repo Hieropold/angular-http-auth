@@ -1,16 +1,30 @@
 {
-  "author": "Witold Szczerba",
   "name": "angular-http-auth",
-  "homepage": "https://github.com/witoldsz/angular-http-auth",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/witoldsz/angular-http-auth.git"
-  },
-  "main": "./src/http-auth-interceptor.js",
   "dependencies": {
     "angular": "^1.2"
   },
+  "authors": [
+    "Witold Szczerba",
+    "Ilya Kurnosenkov <ilya.kurnosenkov@arcadia.spb.ru>"
+  ],
+  "description": "Angular http interceptor for handling authorization. Based on module by Witold Szczerba.",
+  "homepage": "https://github.com/hieropold/angular-http-auth",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hieropold/angular-http-auth.git"
+  },
+  "main": "./src/http-auth-interceptor.js",
+  "moduleType": [],
+  "keywords": [
+    "angular", "auth"
+  ],
+  "license": "MIT",
   "ignore": [
-    "package.json"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
   ]
 }
