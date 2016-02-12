@@ -86,3 +86,40 @@ The `loginConfirmed` method supports the injection of an Updater function that w
 
 The initial failed request will now be retried, all queued http requests will be recalculated using the Updater-Function.
 
+#### Alternative way of updating $http(config)
+You can set a requestPreprocessor function which will be applied to all intercepted requests, e.g.:
+```js
+  authService.setRequestPreprocessor(function (requestConfig) {
+  
+    return $q( ... make some changes to request config (e.g. add access token to headers) and resolve when done ... );
+  
+  });
+```
+
+#### Filtering intercepted requests
+If your application makes requests to external hosts which doesn't require authentication you can use set requestFilter
+to exclude them from interceptor:
+```js
+  authService.setRequestFilter(function (requestConfig) {
+  
+    if (requestConfig.url == 'http://host.requires.auth/some-protected-resource') {
+      return true;
+    }
+    
+    return false;
+  
+  });
+```
+
+#### Filtering responseErrors
+In order to skip intercepting of response errors from certain requests you can set filterResponseError function:
+```js
+  authService.setFilterResponseError(function (rejection) {
+    
+    if (rejection.config.url !== 'http://host.requires.auth/and-401-responses-from-it-should-be-processed.html') {
+      return true;
+    }
+    
+    return false;
+  });
+```
